@@ -1,0 +1,19 @@
+.fav_authors{
+    color: #fff;
+    background: #FFC800;
+    padding: 2px 10px;
+    margin: 10px;
+    display: inline-block;
+    cursor: pointer;
+}
+.fav-authors-list li{
+    margin: 10px 0;
+    display: inline-block;
+    width: 100%;
+}
+.add-fav{
+    background: #FFC800;
+}
+.rmv-fav{
+    background: #5EB34F;
+}
