@@ -102,31 +102,36 @@ add_action( 'wp_ajax_remove_fav_author_id', 'fav_author_remove_user' );
 
 // Add shorcode on php file
 function fav_authors_link() {
-    wp_enqueue_script('favorite-authors-script');
     wp_enqueue_style('favorite-authors');
-    wp_enqueue_style('themename-style');
-
-    $fav_author_list = get_user_option( 'favorite-authors', fav_authors_get_user_id() );
-    //var_dump( $fav_author_list ); 
-
-    global $post;
-    //print_r($post);
-    $user_id = $post->post_author;
     
-    if( empty( $fav_author_list ) ){
-        $str = '<span class="fav_authors add-fav" id="fav_author_button" data-author-id="'.$user_id.'"><span class="dashicons dashicons-star-filled"></span> Favorite'; 
-    }else{
-    
-        if(in_array($user_id, $fav_author_list)){
-            $str = '<span class="fav_authors rmv-fav" id="fav_author_rmove_button" data-author-id="'.$user_id.'">Unfavorite';
+    if ( is_user_logged_in() ) {
+        wp_enqueue_script('favorite-authors-script');
+        wp_enqueue_style('themename-style');
+
+        $fav_author_list = get_user_option( 'favorite-authors', fav_authors_get_user_id() );
+        //var_dump( $fav_author_list ); 
+
+        global $post;
+        //print_r($post);
+        $user_id = $post->post_author;
+
+        if( empty( $fav_author_list ) ){
+            $str = '<span class="fav_authors add-fav" id="fav_author_button" data-author-id="'.$user_id.'"><span class="dashicons dashicons-star-filled"></span> Favorite'; 
         }else{
-            $str = '<span class="fav_authors add-fav" id="fav_author_button" data-author-id="'.$user_id.'"><span class="dashicons dashicons-star-filled"></span> Favorite';   
+
+            if(in_array($user_id, $fav_author_list)){
+                $str = '<span class="fav_authors rmv-fav" id="fav_author_rmove_button" data-author-id="'.$user_id.'">Unfavorite';
+            }else{
+                $str = '<span class="fav_authors add-fav" id="fav_author_button" data-author-id="'.$user_id.'"><span class="dashicons dashicons-star-filled"></span> Favorite';   
+            }
+
         }
-        
+        $str .= '</span>';
+
+        echo $str;
+    }else{
+        echo '<p class="fa-signin"><a href="'.wp_login_url().'" title="Login">Log in to favorite this author</a></p>';
     }
-    $str .= '</span>';
-    
-    echo $str;
 }
 
 /*
