@@ -13,8 +13,7 @@ Use `[favorite-authors-list]` on your page or post to display list of favorited 
 
 
 ###Todos..
-1. Fix bug on after clicking favorite button, switch to unfavorite
-2. Assign class accordingly.
+1. Pagination needs to be improved
 
 
 ###Changelog
