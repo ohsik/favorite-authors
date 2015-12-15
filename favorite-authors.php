@@ -169,7 +169,7 @@ function fav_authors_pagi(){
 
         foreach($fav_author_list as $fav_au ){
             $fa_au = get_userdata( $fav_au );
-            $author_url = esc_url(site_url( "/author/" ).$fa_au->user_login);
+            $author_url = esc_url(site_url( "/?author=" ).$fa_au->ID);
             
             echo '<li><a href="'.$author_url.'">';
             echo esc_html($fa_au->display_name);
@@ -206,7 +206,7 @@ function fav_authors_get_list(){
             echo '<div class="fav-authors-list" id="fav-authors-list">';
             foreach($fav_author_list as $fav_au ){
                 $fa_au = get_userdata( $fav_au );
-                $author_url = esc_url(site_url( "/author/" ).$fa_au->user_login);
+                $author_url = esc_url(site_url( "/?author=" ).$fa_au->ID);
 
                 echo '<li><a href="'.$author_url.'">';
                 echo esc_html($fa_au->display_name);
