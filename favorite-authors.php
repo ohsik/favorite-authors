@@ -52,19 +52,27 @@ function fav_authors_get_user_id() {
     return $current_user->ID;
 }
 
-// Add favorite authors to current users DB
+// Add favorite authors to current user's usermeta
 function fav_author_add_fav_author(){
     check_ajax_referer( 'fav_authors_obj_ajax', 'security' );
-    $add_this_author = $_POST['clicked_author_id'];
+    $add_this_author = absint($_POST['clicked_author_id']);
     
+    if($add_this_author !== (int)$add_this_author)
+        return;
+
     if ( current_user_can( 'edit_posts' ) ){
-        $user_id = fav_authors_get_user_id();
+        $user_id = absint(fav_authors_get_user_id());
+
         $author_list = get_user_meta( $user_id, FAV_AUTHORS_META_KEY, true );
-        
-        if( empty( $author_list ) ) {   // There was no meta_value, set an array.
+
+        if( empty( $author_list ) ) { 
             update_user_meta( $user_id, FAV_AUTHORS_META_KEY, array( $add_this_author ) );
         } else {
-            $author_arr = ( is_array( $author_list ) ) ? $author_list : array( $author_list );  // Added in case current value is not an array already.
+            $author_arr = ( is_array( $author_list ) ) ? $author_list : array( $author_list );
+            
+            if(in_array($add_this_author, $author_list))
+                return;
+            
             $author_arr[] = $add_this_author;
             update_user_meta( $user_id, FAV_AUTHORS_META_KEY, $author_arr );
         }
@@ -73,15 +81,18 @@ function fav_author_add_fav_author(){
 }
 add_action( 'wp_ajax_get_fav_author_id', 'fav_author_add_fav_author' );
 
-// Remove favorite authors from current users DB
+// Remove favorite authors from current user's usermeta
 function fav_author_remove_user(){
     check_ajax_referer( 'fav_authors_obj_ajax', 'security' );
     
     if ($_POST['clicked_author_id']){
-        $remove_this_author = $_POST['clicked_author_id'];
+        $remove_this_author = absint($_POST['clicked_author_id']);
+        
+        if($remove_this_author !== (int)$remove_this_author)
+            return;
         
         if ( current_user_can( 'edit_posts' ) ){
-            $user_id = fav_authors_get_user_id();
+            $user_id = absint(fav_authors_get_user_id());
 
             $author_list = get_user_meta( $user_id, FAV_AUTHORS_META_KEY, true );
             //print_r($author_list);
@@ -113,14 +124,14 @@ function fav_authors_link() {
 
         global $post;
         //print_r($post);
-        $user_id = $post->post_author;
+        $user_id = absint($post->post_author);
 
         if( empty( $fav_author_list ) ){
             $str = '<span class="fav_authors add-fav" id="fav_author_button" data-author-id="'.$user_id.'"><span class="dashicons dashicons-star-filled"></span> Favorite'; 
         }else{
 
             if(in_array($user_id, $fav_author_list)){
-                $str = '<span class="fav_authors rmv-fav" id="fav_author_rmove_button" data-author-id="'.$user_id.'">Unfavorite';
+                $str = '<span class="fav_authors rmv-fav" id="fav_author_rmove_button" data-author-id="'.$user_id.'"><span class="dashicons dashicons-yes"></span> Favorited!';
             }else{
                 $str = '<span class="fav_authors add-fav" id="fav_author_button" data-author-id="'.$user_id.'"><span class="dashicons dashicons-star-filled"></span> Favorite';   
             }
@@ -135,7 +146,7 @@ function fav_authors_link() {
 }
 
 /*
-**  Pagination for favorite user list
+**  Pagination for favorite author list by current user
     This pagination code and get favorite user list code can be clearned up better than this...
 */
 function fav_authors_pagi(){
@@ -145,29 +156,35 @@ function fav_authors_pagi(){
 
     $page = ! empty( $_POST['clicked_author_id'] ) ? (int) $_POST['clicked_author_id'] : 1;
     $total = count( $fav_author_list ); 
-    $limit = 2; //per page
+    $limit = 20; // <----------------------------------------------------- Set number of authors to show per page
     $totalPages = ceil( $total/ $limit );
     $page = max($page, 1);
     $page = min($page, $totalPages);
     $offset = ($page - 1) * $limit;
     if( $offset < 0 ) $offset = 0;
     
-    $fav_author_list = array_slice( $fav_author_list, $offset, $limit );
+    
+    if ($fav_author_list){
+        $fav_author_list = array_slice( $fav_author_list, $offset, $limit );
 
-    foreach($fav_author_list as $fav_au ){
-        $fa_au = get_userdata( $fav_au );
-        $author_url = site_url( "/author/" ).$fa_au->user_login;
-
-        echo '<li><a href="'.$author_url.'">';
-        echo $fa_au->display_name;
-        echo '</a> <span class="fav_authors rmv-fav" id="fav_author_rmove_button" data-author-id="'.$fa_au->ID.'">Unfavorite</span></li>';
+        foreach($fav_author_list as $fav_au ){
+            $fa_au = get_userdata( $fav_au );
+            $author_url = esc_url(site_url( "/author/" ).$fa_au->user_login);
+            
+            echo '<li><a href="'.$author_url.'">';
+            echo esc_html($fa_au->display_name);
+            echo '</a> <span class="fav_authors rmv-fav" id="fav_author_rmove_button" data-author-id="'.$fa_au->ID.'"><span class="dashicons dashicons-yes"></span> Favorited!</span></li>';
+        }
+    }else{
+        echo '<h2>Add favorite authors!</h2>';
     }
     die();
 }
 add_action( 'wp_ajax_fav_au_pagi', 'fav_authors_pagi' );
 
 /*
-**  Get favorite user list
+**  Get favorite author list by current user
+    Shortcode [favorite-authors-list] function
 */
 function fav_authors_get_list(){
     $fav_author_list = get_user_option( 'favorite-authors', fav_authors_get_user_id() );
@@ -175,29 +192,30 @@ function fav_authors_get_list(){
 
     $page = ! empty( $_POST['page'] ) ? (int) $_POST['page'] : 1;
     $total = count( $fav_author_list );  
-    $limit = 2; //per page    
+    $limit = 20; // <----------------------------------------------------- Set number of authors to show per page
     $totalPages = ceil( $total/ $limit ); 
     $page = max($page, 1); 
     $page = min($page, $totalPages);
     $offset = ($page - 1) * $limit;
     if( $offset < 0 ) $offset = 0;
 
-    $fav_author_list = array_slice( $fav_author_list, $offset, $limit );
-
     if ($fav_author_list){
+        $fav_author_list = array_slice( $fav_author_list, $offset, $limit );
+        
         echo '<div class="fav_authors-wrap">';
             echo '<div class="fav-authors-list" id="fav-authors-list">';
             foreach($fav_author_list as $fav_au ){
                 $fa_au = get_userdata( $fav_au );
-                $author_url = site_url( "/author/" ).$fa_au->user_login;
+                $author_url = esc_url(site_url( "/author/" ).$fa_au->user_login);
 
                 echo '<li><a href="'.$author_url.'">';
-                echo $fa_au->display_name;
-                echo '</a> <span class="fav_authors rmv-fav" id="fav_author_rmove_button" data-author-id="'.$fa_au->ID.'">Unfavorite</span></li>';
+                echo esc_html($fa_au->display_name);
+                echo '</a> <span class="fav_authors rmv-fav" id="fav_author_rmove_button" data-author-id="'.$fa_au->ID.'"><span class="dashicons dashicons-yes"></span> Favorited!</span></li>';
             }
             echo '</div>';
+            // Pagination
             echo '<div class="fav-authors-pagination">';
-            if( $totalPages != 0 ) {
+            if( $totalPages != 0 && $totalPages >= $limit) {
                 for ($i = $page; $i <= $totalPages; $i++) {
                     if ($i == 1){
                         echo '<li id="fav_pagi" data-fav-pid="'.$i.'" class="fa_current">'.$i.'</li>';

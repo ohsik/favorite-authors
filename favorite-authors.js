@@ -22,9 +22,9 @@ jQuery(document).ready( function($) {
                 return false;
             },
             success: function(data) {
-                console.log(data + ' Added!');
-                $('#fav_author_button').html('Unfavorite');
-                $('#fav_author_button').attr('id', 'fav_author_rmove_button');
+                //console.log(data + ' Added!');
+                $('[data-author-id=' + clicked_id + ']').html('<span class="dashicons dashicons-yes"></span> Favorited!');
+                $('[data-author-id=' + clicked_id + ']').attr('id', 'fav_author_rmove_button');
                 $('[data-author-id=' + clicked_id + ']').removeClass('add-fav');
                 $('[data-author-id=' + clicked_id + ']').addClass('rmv-fav');
             }
@@ -54,9 +54,9 @@ jQuery(document).ready( function($) {
                 return false;
             },
             success: function(data) {
-                console.log(data + ' Deleted!');
-                $('#fav_author_rmove_button').html('<span class="dashicons dashicons-star-filled"></span> Favorite');
-                $('#fav_author_rmove_button').attr('id', 'fav_author_button');
+                //console.log(data + ' Deleted!');
+                $('[data-author-id=' + clicked_id + ']').html('<span class="dashicons dashicons-star-filled"></span> Favorite');
+                $('[data-author-id=' + clicked_id + ']').attr('id', 'fav_author_button');
                 $('[data-author-id=' + clicked_id + ']').removeClass('rmv-fav');
                 $('[data-author-id=' + clicked_id + ']').addClass('add-fav');
             }
