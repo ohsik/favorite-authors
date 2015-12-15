@@ -40,8 +40,10 @@
 .fav-authors-pagination li{
     float: left;
     list-style: none;
-    padding: 5px 10px;
-    margin-right: 10px;
+    padding: 4px 12px;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    margin-right: 6px;
     cursor: pointer;
     border: 1px solid #ddd;
     background: #ddd;
