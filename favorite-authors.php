@@ -215,7 +215,8 @@ function fav_authors_get_list(){
             echo '</div>';
             // Pagination
             echo '<div class="fav-authors-pagination">';
-            if( $totalPages != 0 && $totalPages >= $limit) {
+ 
+            if( $totalPages != 0 && $total >= $limit) {
                 for ($i = $page; $i <= $totalPages; $i++) {
                     if ($i == 1){
                         echo '<li id="fav_pagi" data-fav-pid="'.$i.'" class="fa_current">'.$i.'</li>';
