@@ -46,7 +46,7 @@ function fav_authors_enqueue(){
 add_action( 'wp_enqueue_scripts', 'fav_authors_enqueue' );
 
 // Get curren user
-function fav_authors_get_user_id() {
+function fav_authors_get_user_id(){
     global $current_user;
     get_currentuserinfo();
     return $current_user->ID;
@@ -112,7 +112,7 @@ function fav_author_remove_user(){
 add_action( 'wp_ajax_remove_fav_author_id', 'fav_author_remove_user' );
 
 // Add shorcode on php file
-function fav_authors_link() {
+function fav_authors_link(){
     wp_enqueue_style('favorite-authors');
     
     if ( is_user_logged_in() ) {
@@ -125,6 +125,9 @@ function fav_authors_link() {
         global $post;
         //print_r($post);
         $user_id = absint($post->post_author);
+        
+        if(fav_authors_get_user_id() == $user_id)
+            return;
 
         if( empty( $fav_author_list ) ){
             $str = '<span class="fav_authors add-fav" id="fav_author_button" data-author-id="'.$user_id.'"><span class="dashicons dashicons-star-filled"></span> Favorite'; 
@@ -169,7 +172,7 @@ function fav_authors_pagi(){
 
         foreach($fav_author_list as $fav_au ){
             $fa_au = get_userdata( $fav_au );
-            $author_url = esc_url(site_url( "/?author=" ).$fa_au->ID);
+            $author_url = esc_url(site_url( "/author/" ).$fa_au->user_login);
             
             echo '<li><a href="'.$author_url.'">';
             echo esc_html($fa_au->display_name);
@@ -253,7 +256,7 @@ function fav_authors_list(){
 add_shortcode('favorite-authors-list', 'fav_authors_list');
 
 // Add plug in link to setting page
-function fav_authors_action_links( $links ) {
+function fav_authors_action_links( $links ){
    $links[] = '<a href="http://wp.ohsikpark.com/favorite-authors/" target="_blank">Documentation</a>';
    return $links;
 }
