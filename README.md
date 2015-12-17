@@ -14,7 +14,7 @@ Use `[favorite-authors-list]` on your page or post to display list of favorited 
 
 ###Changelog
 
-= 1.0 =
+v 1.0
 * In development
 
 
