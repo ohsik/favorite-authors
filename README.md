@@ -1,5 +1,6 @@
 #Favorite Authors
-Favorite authors on multi author WordPress sites for loggedin users
+Favorite Authors allow you to add all of your favorite authors on your account. 
+Simply add `<?php fav_authors_link(); ?>` on your template files to display Favorite button and use `[favorite-authors-list]` shortcode on page or post to show favorited author list.
 
 Please email me for any comments or questions o@ohsikpark.com
 
@@ -8,13 +9,8 @@ Please email me for any comments or questions o@ohsikpark.com
 - How to use?
 Add this PHP snippet where you want to display `Favorite author` button `<?php fav_authors_link(); ?>`
 
-- What are the shortcode?
+- Shortcode
 Use `[favorite-authors-list]` on your page or post to display list of favorited authors.
-
-
-###Todos..
-1. Pagination should be improved
-
 
 ###Changelog
 
