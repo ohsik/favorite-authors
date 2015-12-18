@@ -1,5 +1,5 @@
 #Favorite Authors
-Favorite Authors allow you to add all of your favorite authors on your account. 
+Favorite Authors allows you to add all of your favorite authors on your account. 
 Simply add `<?php fav_authors_link(); ?>` on your template files to display Favorite button and use `[favorite-authors-list]` shortcode on page or post to show favorited author list.
 
 Please email me for any comments or questions o@ohsikpark.com

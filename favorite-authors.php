@@ -2,7 +2,7 @@
 /*
 Plugin Name: Favorite Authors
 Plugin URI: http://wp.ohsikpark.com/favorite-authors/
-Description: Favorite authors on multi author WordPress sites for loggedin users.
+Description: Favorite Authors allows you to add all of your favorite authors on your account. 
 Author: writegnj
 Version: 1.0
 Author URI: http://www.ohsikpark.com
