@@ -38,6 +38,13 @@ Use `[favorite-authors-list]` on your page or post to display list of favorited 
 By default, it shows 20 authors per page. Change `$limit = 20;` on `fav_authors_pagi()` and `fav_authors_get_list()` in `favorite-authors.php` file.
 
 
+== Screenshots ==
+
+1. Favorite button
+2. Favorited author
+3. Show all favorited authors
+
+
 == Changelog ==
 
 = 1.0 =
