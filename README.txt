@@ -49,3 +49,6 @@ By default, it shows 20 authors per page. Change `$limit = 20;` on `fav_authors_
 
 = 1.0 =
 * Initial release
+
+= 1.1 =
+* Favorited author number added

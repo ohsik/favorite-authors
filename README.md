@@ -14,8 +14,11 @@ Use `[favorite-authors-list]` on your page or post to display list of favorited 
 
 ###Changelog
 
-v 1.0
-* In development
+= 1.0 =
+* Initial release
+
+= 1.1 =
+* Favorited author number added
 
 
 ###License: GPLv2 or later

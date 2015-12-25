@@ -4,7 +4,7 @@ Plugin Name: Favorite Authors
 Plugin URI: http://wp.ohsikpark.com/favorite-authors/
 Description: Favorite Authors allows you to add all of your favorite authors on your account. 
 Author: writegnj
-Version: 1.0
+Version: 1.1
 Author URI: http://www.ohsikpark.com
 Text Domain: favorite-authors
 License: GPL2
@@ -206,6 +206,7 @@ function fav_authors_get_list(){
         $fav_author_list = array_slice( $fav_author_list, $offset, $limit );
         
         echo '<div class="fav_authors-wrap">';
+            echo '<p class="fav-total">Total favorited author: '.$total.'</p>';
             echo '<div class="fav-authors-list" id="fav-authors-list">';
             foreach($fav_author_list as $fav_au ){
                 $fa_au = get_userdata( $fav_au );
