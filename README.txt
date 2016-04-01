@@ -3,8 +3,8 @@ Contributors: writegnj
 Donate link: http://www.ohsikpark.com/
 Tags: follow author, favorite author, follow, favorite, bookmark author, bookmark, subscribe author, subscribe, like author, like
 Requires at least: 3.0.1
-Tested up to: 4.4
-Stable tag: 4.4
+Tested up to: 4.5
+Stable tag: 4.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -52,3 +52,6 @@ By default, it shows 20 authors per page. Change `$limit = 20;` on `fav_authors_
 
 = 1.1 =
 * Favorited author number added
+
+= 1.2 =
+* Replaced get_currentuserinfo() with wp_get_current_user() for WordPress 4.5

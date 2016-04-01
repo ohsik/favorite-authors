@@ -4,7 +4,7 @@ Plugin Name: Favorite Authors
 Plugin URI: http://wp.ohsikpark.com/favorite-authors/
 Description: Favorite Authors allows you to add all of your favorite authors on your account. 
 Author: writegnj
-Version: 1.1
+Version: 1.2
 Author URI: http://www.ohsikpark.com
 Text Domain: favorite-authors
 License: GPL2
@@ -48,7 +48,7 @@ add_action( 'wp_enqueue_scripts', 'fav_authors_enqueue' );
 // Get curren user
 function fav_authors_get_user_id(){
     global $current_user;
-    get_currentuserinfo();
+    wp_get_current_user();
     return $current_user->ID;
 }
 

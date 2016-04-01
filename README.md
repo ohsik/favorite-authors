@@ -20,6 +20,9 @@ Use `[favorite-authors-list]` on your page or post to display list of favorited 
 = 1.1 =
 * Favorited author number added
 
+= 1.2 =
+* Replaced get_currentuserinfo() with wp_get_current_user() for WordPress 4.5
+
 
 ###License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
