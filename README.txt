@@ -3,13 +3,13 @@ Contributors: writegnj
 Donate link: http://www.ohsikpark.com/
 Tags: follow author, favorite author, follow, favorite, bookmark author, bookmark, subscribe author, subscribe, like author, like
 Requires at least: 3.0.1
-Tested up to: 4.5
-Stable tag: 4.5
+Tested up to: 4.6.1
+Stable tag: 4.6.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 == Description ==
-Favorite Authors allows you to add all of your favorite authors on your account. 
+Favorite Authors allows you to add all of your favorite authors on your account.
 Simply add `<?php fav_authors_link(); ?>` on your template files to display Favorite button and use `[favorite-authors-list]` shortcode on page or post to show favorited author list.
 
 Please email me for any comments or questions o@ohsikpark.com
